@@ -6,30 +6,32 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="囄囖華 A 學習筆記">
-    <title> - 囄囖華 A 學習筆記</title>
+    <title>Install LAMP + WordPress - 囄囖華 A 學習筆記</title>
     <meta name="author" content="zerohua">
     
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <meta name="description" content="Install LAMP + Wordpress###Step One - Install Apache    sudo apt-get update  (update ubuntu package list)    sudo apt-get install apache2
-###Step Two - Install Mysql# 不是必要的指令 
-sudo apt-get install mys">
+    <meta name="description" content="Install LAMPStep One - Install Apache12$ sudo apt-get update  (update ubuntu package list)$ sudo apt-get install apache2
+Step Two - Install Mysql# 不是必要的指令 
+123$ sudo apt-get install mysql-server php5-">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="囄囖華 A 學習筆記">
+<meta property="og:title" content="Install LAMP + WordPress">
 <meta property="og:url" content="http://blog.zerohua.com/2015/08/12/install_lamp_wordpress/index.html">
 <meta property="og:site_name" content="囄囖華 A 學習筆記">
-<meta property="og:description" content="Install LAMP + Wordpress###Step One - Install Apache    sudo apt-get update  (update ubuntu package list)    sudo apt-get install apache2
-###Step Two - Install Mysql# 不是必要的指令 
-sudo apt-get install mys">
-<meta property="og:updated_time" content="2015-08-12T13:01:01.000Z">
+<meta property="og:description" content="Install LAMPStep One - Install Apache12$ sudo apt-get update  (update ubuntu package list)$ sudo apt-get install apache2
+Step Two - Install Mysql# 不是必要的指令 
+123$ sudo apt-get install mysql-server php5-">
+<meta property="og:updated_time" content="2015-08-12T16:08:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="囄囖華 A 學習筆記">
-<meta name="twitter:description" content="Install LAMP + Wordpress###Step One - Install Apache    sudo apt-get update  (update ubuntu package list)    sudo apt-get install apache2
-###Step Two - Install Mysql# 不是必要的指令 
-sudo apt-get install mys">
+<meta name="twitter:title" content="Install LAMP + WordPress">
+<meta name="twitter:description" content="Install LAMPStep One - Install Apache12$ sudo apt-get update  (update ubuntu package list)$ sudo apt-get install apache2
+Step Two - Install Mysql# 不是必要的指令 
+123$ sudo apt-get install mysql-server php5-">
     
     
+    
+        <meta property="og:image" content="http://www.gravatar.com/avatar/601439f7c7623da296c23e3c48f22da6?s=640"/>
     
     
     
@@ -57,6 +59,15 @@ sudo apt-get install mys">
     
 </header>
             <nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                
+                    <img class="sidebar-profile-picture" src="http://www.gravatar.com/avatar/601439f7c7623da296c23e3c48f22da6?s=90"/>
+                
+            </a>
+            <span class="sidebar-profile-name">zerohua</span>
+        </div>
     
     
         <ul class="sidebar-buttons">
@@ -169,67 +180,47 @@ sudo apt-get install mys">
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title" itemprop="headline">
-            (沒有標題)
+            Install LAMP + WordPress
         </h1>
     
     <div class="post-meta">
-    <time itemprop="datePublished" content="Wed Aug 12 2015 21:01:01 GMT+0800">
+    <time itemprop="datePublished" content="Wed Aug 12 2015 23:25:02 GMT+0800">
 	
 		    2015, 8月 12
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/網絡服務/">網絡服務</a>
+
+
     
 </div>
 </div>
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <h2 id="Install_LAMP_+_Wordpress">Install LAMP + Wordpress</h2><p>###Step One - Install Apache<br>    sudo apt-get update  (update ubuntu package list)<br>    sudo apt-get install apache2</p>
-<p>###Step Two - Install Mysql<br><code># 不是必要的指令</code> </p>
-<pre><code>sudo apt-<span class="keyword">get</span> install mysql-server php5-mysql
-sudo mysql_install_db ( create <span class="keyword">it</span>'s database directory structure) <span class="comment">#</span>
-sudo mysql_secure_installation (<span class="command">run</span> a simple security <span class="keyword">script</span>) <span class="comment">#</span>
-</code></pre><h3 id="Step_Three_—_Install_PHP">Step Three — Install PHP</h3><pre><code>sudo apt-<span class="keyword">get</span> install php5 libapache2-<span class="keyword">mod</span>-php5 php5-mcrypt
-</code></pre><h2 id="Install_WordPress_on_Ubuntu_Apache">Install WordPress on Ubuntu Apache</h2><p>###Step One - Install unzip (for digitalOcean)<br><code>Linode 已自動安裝</code></p>
-<pre><code>sudo apt-<span class="keyword">get</span> install unzip
-</code></pre><p>###Step Two - Install WordPress SoftWare<br>    cd /var/www <return><br>    wget <a href="https://tw.wordpress.org/latest-zh_TW.zip" target="_blank" rel="external">https://tw.wordpress.org/latest-zh_TW.zip</a> <return></return></return></p>
-<p>###Step Three - 修改 wordpress 資料夾名稱<br><code>更改為test.tw</code></p>
-<pre><code>mv wordpress <span class="keyword">test</span>.<span class="keyword">tw</span> &lt;<span class="keyword">return</span>&gt;
-<span class="keyword">cd</span> <span class="keyword">test</span>.<span class="keyword">tw</span> &lt;<span class="keyword">return</span>&gt;
-<span class="keyword">mkdir</span> logs &lt;retrn&gt; (新增logs資料夾)
-<span class="keyword">cd</span> .. &lt;<span class="keyword">return</span>&gt;
-</code></pre><h3 id="Step_Four_-_設定wordpress_目錄權限">Step Four - 設定wordpress 目錄權限</h3><pre><code>chown -R www-<span class="type">data</span>:www-<span class="type">data</span> test.tw &lt;<span class="keyword">return</span>&gt;
-</code></pre><h3 id="Step_five_-_設定固定網址參數">Step five - 設定固定網址參數</h3><pre><code>sudo a2enmod rewrite &lt;<span class="keyword">return</span>&gt;
-<span class="keyword">cd</span> <span class="keyword">test</span>.<span class="keyword">tw</span> &lt;<span class="keyword">return</span>&gt;
-touch .htaccess &lt;<span class="keyword">return</span>&gt;
-chmod 777 .htaccess &lt;<span class="keyword">return</span>&gt;
-</code></pre><p><code>**在Wordpress固定網址頁面更新您要的固定網址結構</code><br><br><code>再將「.htaccess」檔案存取權限變更為644</code></p>
-<pre><code>chmod <span class="number">644</span> .htaccess &lt;<span class="keyword">return</span>&gt;
-</code></pre><h3 id="Step_Seven_-_新增wordpress_db">Step Seven - 新增wordpress db</h3><pre><code>sudo mysql -uroot -pscum0923 &lt;<span class="keyword">return</span>&gt;
-</code></pre><p><code>mysql &gt;</code></p>
-<pre><code>create database <span class="built_in">test</span>; &lt;<span class="built_in">return</span>&gt;
-<span class="built_in">exit</span> &lt;<span class="built_in">return</span>&gt;
-</code></pre><p>##Install Ubuntu Virtual Host</p>
-<p>###Step One - 新增 Virtual Host<br>    cd / <return><br>    cd /etc/apache2/sites-available <return><br>    nano test.tw.conf <return></return></return></return></p>
+            <h1 id="Install_LAMP">Install LAMP</h1><h3 id="Step_One_-_Install_Apache">Step One - Install Apache</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get <span class="operator"><span class="keyword">update</span>  (<span class="keyword">update</span> ubuntu <span class="keyword">package</span> <span class="keyword">list</span>)</span><br><span class="line">$ sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> apache2</span></span><br></pre></td></tr></table></figure>
+<h3 id="Step_Two_-_Install_Mysql">Step Two - Install Mysql</h3><p><code># 不是必要的指令</code> </p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-<span class="keyword">get</span> install mysql-server php5-mysql</span><br><span class="line">$ sudo mysql_install_db ( create <span class="keyword">it</span>'s database directory structure) <span class="comment">#</span></span><br><span class="line">$ sudo mysql_secure_installation (<span class="command">run</span> a simple security <span class="keyword">script</span>) <span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h3 id="Step_Three_—_Install_PHP">Step Three — Install PHP</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-<span class="keyword">get</span> install php5 libapache2-<span class="keyword">mod</span>-php5 php5-mcrypt</span><br></pre></td></tr></table></figure>
+<h1 id="Install_WordPress_on_Ubuntu_Apache">Install WordPress on Ubuntu Apache</h1><h3 id="Step_One_-_Install_unzip_(for_digitalOcean)">Step One - Install unzip (for digitalOcean)</h3><p><code>Linode 已自動安裝</code></p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-<span class="keyword">get</span> install unzip</span><br></pre></td></tr></table></figure>
+<h3 id="Step_Two_-_Install_WordPress_SoftWare">Step Two - Install WordPress SoftWare</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>cd /var/www &lt;<span class="keyword">return</span>&gt;</span><br><span class="line"><span class="variable">$ </span>wget <span class="symbol">https:</span>/<span class="regexp">/tw.wordpress.org/latest</span>-zh_TW.zip &lt;<span class="keyword">return</span>&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Step_Three_-_修改_wordpress_資料夾名稱">Step Three - 修改 wordpress 資料夾名稱</h3><p><code>更改為test.tw</code></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mv wordpress <span class="keyword">test</span>.<span class="keyword">tw</span> &lt;<span class="keyword">return</span>&gt;</span><br><span class="line">$ <span class="keyword">cd</span> <span class="keyword">test</span>.<span class="keyword">tw</span> &lt;<span class="keyword">return</span>&gt;</span><br><span class="line">$ <span class="keyword">mkdir</span> logs &lt;retrn&gt; (新增logs資料夾)</span><br><span class="line">$ <span class="keyword">cd</span> .. &lt;<span class="keyword">return</span>&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Step_Four_-_設定wordpress_目錄權限">Step Four - 設定wordpress 目錄權限</h3><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chown -R www-<span class="type">data</span>:www-<span class="type">data</span> test.tw &lt;<span class="keyword">return</span>&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Step_five_-_設定固定網址參數">Step five - 設定固定網址參數</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sudo a2enmod rewrite &lt;<span class="keyword">return</span>&gt;</span><br><span class="line"><span class="variable">$ </span>cd test.tw &lt;<span class="keyword">return</span>&gt;</span><br><span class="line"><span class="variable">$ </span>touch .htaccess &lt;<span class="keyword">return</span>&gt;</span><br><span class="line"><span class="variable">$ </span>chmod <span class="number">777</span> .htaccess &lt;<span class="keyword">return</span>&gt;</span><br></pre></td></tr></table></figure>
+<p><code>**在Wordpress固定網址頁面更新您要的固定網址結構,再將「.htaccess」檔案存取權限變更為644</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chmod <span class="number">644</span> .htaccess &lt;<span class="keyword">return</span>&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Step_Seven_-_新增wordpress_db_&amp;_wordpress_user">Step Seven - 新增wordpress db &amp; wordpress user</h3><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mysql -uroot -p[password] &lt;<span class="keyword">return</span>&gt;</span><br><span class="line">mysql &gt; CREATE DATABASE wordpress; &lt;<span class="keyword">return</span>&gt;</span><br><span class="line">mysql &gt; CREATE USER wordpressuser@localhost IDENTIFIED <span class="keyword">BY</span> <span class="comment">'password'; <span class="xmlDocTag">&lt;return&gt;</span></span></span><br><span class="line">mysql &gt; GRANT ALL PRIVILEGES <span class="keyword">ON</span> wordpress.* <span class="keyword">TO</span> wordpressuser@localhost; &lt;<span class="keyword">return</span>&gt;</span><br><span class="line">mysql &gt; FLUSH PRIVILEGES;</span><br><span class="line">mysql &gt;	<span class="keyword">exit</span> &lt;<span class="keyword">return</span>&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Install_Ubuntu_Virtual_Host">Install Ubuntu Virtual Host</h1><h3 id="Step_One_-_新增_Virtual_Host">Step One - 新增 Virtual Host</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">cd</span> /etc/apache2/sites-available &lt;<span class="keyword">return</span>&gt;</span><br><span class="line">$ nano <span class="keyword">test</span>.<span class="keyword">tw</span>.<span class="keyword">conf</span> &lt;<span class="keyword">return</span>&gt;</span><br></pre></td></tr></table></figure>
 <p><code>test.tw.conf 內容</code> <code>ctrl + o --&gt;save</code> <code>ctrl + x --&gt;exit</code></p>
-<pre><code>&lt;VirtualHost *:80&gt;
-    ServerAdmin nono520@gmail.com
-    DocumentRoot /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/
-    ServerName <span class="keyword">test</span>.<span class="keyword">tw</span>
-    ServerAlias www.<span class="keyword">test</span>.<span class="keyword">tw</span>
-    ErrorLog /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/logs/<span class="keyword">error</span>.<span class="literal">log</span>
-    CustomLog /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/logs/access.<span class="keyword">log</span> combined
-    &lt;Directory /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/&gt;
-            Options Indexes FollowSymLinks MultiViews
-            AllowOverride All
-            <span class="keyword">Order</span> allow,deny
-            allow from all
-     &lt;/Directory&gt;
-&lt;/VirtualHost&gt;
-</code></pre><p>###Step Two - 使 test.tw 生效<br>    sudo a2ensite test.tw.conf <retrun><br>    sudo service apache2 restart <return></return></retrun></p>
-<p>##Over </p>
-<p>###打開Brower<br>    <a href="http://test.tw" target="_blank" rel="external">http://test.tw</a> <return> </return></p>
-
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">      ServerAdmin xxx@gmail.com</span><br><span class="line">      DocumentRoot /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/</span><br><span class="line">      ServerName <span class="keyword">test</span>.<span class="keyword">tw</span></span><br><span class="line">      ServerAlias www.<span class="keyword">test</span>.<span class="keyword">tw</span></span><br><span class="line">      ErrorLog /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/logs/<span class="keyword">error</span>.<span class="literal">log</span></span><br><span class="line">      CustomLog /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/logs/access.<span class="keyword">log</span> combined</span><br><span class="line">      &lt;Directory /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/&gt;</span><br><span class="line">              Options Indexes FollowSymLinks MultiViews</span><br><span class="line">              AllowOverride All</span><br><span class="line">              <span class="keyword">Order</span> allow,deny</span><br><span class="line">              allow from all</span><br><span class="line">      &lt;/Directory&gt;</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Step_Two_-_使_test-tw_生效">Step Two - 使 test.tw 生效</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo a2ensite <span class="keyword">test</span>.<span class="keyword">tw</span>.<span class="keyword">conf</span> &lt;retrun&gt;</span><br><span class="line">$ sudo service apache2 restart &lt;<span class="keyword">return</span>&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Over">Over</h1><h3 id="打開Brower_開始設定wordpress">打開Brower 開始設定wordpress</h3><pre><code><span class="string">http:</span><span class="comment">//test.tw &lt;return&gt; </span>
+</code></pre>
             
                 
 
@@ -237,6 +228,13 @@ chmod 777 .htaccess &lt;<span class="keyword">return</span>&gt;
         </div>
     </div>
     <div class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">標記在</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/LAMP/">LAMP</a> <a class="tag tag--primary tag--small t-link" href="/tags/Linux/">Linux</a> <a class="tag tag--primary tag--small t-link" href="/tags/WordPress/">WordPress</a>
+
+            </div>
         
         <div class="post-actions-wrap">
     <nav>
@@ -298,6 +296,10 @@ chmod 777 .htaccess &lt;<span class="keyword">return</span>&gt;
 </div>
 
 
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
         
     </div>
 </article>
@@ -402,6 +404,8 @@ chmod 777 .htaccess &lt;<span class="keyword">return</span>&gt;
             <i class="fa fa-remove"></i>
         </div>
         
+            <img id="about-card-picture" src="http://www.gravatar.com/avatar/601439f7c7623da296c23e3c48f22da6?s=110"/>
+        
             <h4 id="about-card-name">zerohua</h4>
         
             <h5 id="about-card-bio"><p>author.bio</p>
@@ -425,6 +429,26 @@ chmod 777 .htaccess &lt;<span class="keyword">return</span>&gt;
 <script src="/assets/js/script.min.js" type="text/javascript"></script>
 <!--SCRIPTS END-->
 
+    <script type="text/javascript">
+        var disqus_shortname = 'zerohua';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','7QT47DQseuN_E9sqT-rS','2.0.0');
+    </script>
 
 
 </html>
