@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+  <title><![CDATA[囄囖華 A 學習筆記]]></title>
+  
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://blog.zerohua.com//"/>
+  <updated>2015-08-12T13:01:01.000Z</updated>
+  <id>http://blog.zerohua.com//</id>
+  
+  <author>
+    <name><![CDATA[zerohua]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://blog.zerohua.com/2015/08/12/install_lamp_wordpress/"/>
+    <id>http://blog.zerohua.com/2015/08/12/install_lamp_wordpress/</id>
+    <published>2015-08-12T13:01:01.000Z</published>
+    <updated>2015-08-12T13:01:01.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Install_LAMP_+_Wordpress">Install LAMP + Wordpress</h2><p>###Step One - Install Apache<br>    sudo apt-get update  (update ubuntu package list)<br>    sudo apt-get install apache2</p>
+<p>###Step Two - Install Mysql<br><code># 不是必要的指令</code> </p>
+<pre><code>sudo apt-<span class="keyword">get</span> install mysql-server php5-mysql
+sudo mysql_install_db ( create <span class="keyword">it</span>'s database directory structure) <span class="comment">#</span>
+sudo mysql_secure_installation (<span class="command">run</span> a simple security <span class="keyword">script</span>) <span class="comment">#</span>
+</code></pre><h3 id="Step_Three_—_Install_PHP">Step Three — Install PHP</h3><pre><code>sudo apt-<span class="keyword">get</span> install php5 libapache2-<span class="keyword">mod</span>-php5 php5-mcrypt
+</code></pre><h2 id="Install_WordPress_on_Ubuntu_Apache">Install WordPress on Ubuntu Apache</h2><p>###Step One - Install unzip (for digitalOcean)<br><code>Linode 已自動安裝</code></p>
+<pre><code>sudo apt-<span class="keyword">get</span> install unzip
+</code></pre><p>###Step Two - Install WordPress SoftWare<br>    cd /var/www <return><br>    wget <a href="https://tw.wordpress.org/latest-zh_TW.zip" target="_blank" rel="external">https://tw.wordpress.org/latest-zh_TW.zip</a> <return></return></return></p>
+<p>###Step Three - 修改 wordpress 資料夾名稱<br><code>更改為test.tw</code></p>
+<pre><code>mv wordpress <span class="keyword">test</span>.<span class="keyword">tw</span> &lt;<span class="keyword">return</span>&gt;
+<span class="keyword">cd</span> <span class="keyword">test</span>.<span class="keyword">tw</span> &lt;<span class="keyword">return</span>&gt;
+<span class="keyword">mkdir</span> logs &lt;retrn&gt; (新增logs資料夾)
+<span class="keyword">cd</span> .. &lt;<span class="keyword">return</span>&gt;
+</code></pre><h3 id="Step_Four_-_設定wordpress_目錄權限">Step Four - 設定wordpress 目錄權限</h3><pre><code>chown -R www-<span class="type">data</span>:www-<span class="type">data</span> test.tw &lt;<span class="keyword">return</span>&gt;
+</code></pre><h3 id="Step_five_-_設定固定網址參數">Step five - 設定固定網址參數</h3><pre><code>sudo a2enmod rewrite &lt;<span class="keyword">return</span>&gt;
+<span class="keyword">cd</span> <span class="keyword">test</span>.<span class="keyword">tw</span> &lt;<span class="keyword">return</span>&gt;
+touch .htaccess &lt;<span class="keyword">return</span>&gt;
+chmod 777 .htaccess &lt;<span class="keyword">return</span>&gt;
+</code></pre><p><code>**在Wordpress固定網址頁面更新您要的固定網址結構</code><br><br><code>再將「.htaccess」檔案存取權限變更為644</code></p>
+<pre><code>chmod <span class="number">644</span> .htaccess &lt;<span class="keyword">return</span>&gt;
+</code></pre><h3 id="Step_Seven_-_新增wordpress_db">Step Seven - 新增wordpress db</h3><pre><code>sudo mysql -uroot -pscum0923 &lt;<span class="keyword">return</span>&gt;
+</code></pre><p><code>mysql &gt;</code></p>
+<pre><code>create database <span class="built_in">test</span>; &lt;<span class="built_in">return</span>&gt;
+<span class="built_in">exit</span> &lt;<span class="built_in">return</span>&gt;
+</code></pre><p>##Install Ubuntu Virtual Host</p>
+<p>###Step One - 新增 Virtual Host<br>    cd / <return><br>    cd /etc/apache2/sites-available <return><br>    nano test.tw.conf <return></return></return></return></p>
+<p><code>test.tw.conf 內容</code> <code>ctrl + o --&gt;save</code> <code>ctrl + x --&gt;exit</code></p>
+<pre><code>&lt;VirtualHost *:80&gt;
+    ServerAdmin nono520@gmail.com
+    DocumentRoot /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/
+    ServerName <span class="keyword">test</span>.<span class="keyword">tw</span>
+    ServerAlias www.<span class="keyword">test</span>.<span class="keyword">tw</span>
+    ErrorLog /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/logs/<span class="keyword">error</span>.<span class="literal">log</span>
+    CustomLog /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/logs/access.<span class="keyword">log</span> combined
+    &lt;Directory /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/&gt;
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride All
+            <span class="keyword">Order</span> allow,deny
+            allow from all
+     &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</code></pre><p>###Step Two - 使 test.tw 生效<br>    sudo a2ensite test.tw.conf <retrun><br>    sudo service apache2 restart <return></return></retrun></p>
+<p>##Over </p>
+<p>###打開Brower<br>    <a href="http://test.tw" target="_blank" rel="external">http://test.tw</a> <return> </return></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Install_LAMP_+_Wordpress">Install LAMP + Wordpress</h2><p>###Step One - Install Apache<br>    sudo apt-get update  (update ubuntu pa]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[MAC 套件管理工具 Homebrew]]></title>
+    <link href="http://blog.zerohua.com/2015/08/11/homebrew/"/>
+    <id>http://blog.zerohua.com/2015/08/11/homebrew/</id>
+    <published>2015-08-11T15:38:02.000Z</published>
+    <updated>2015-08-12T12:56:51.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="前言">前言</h3><p>有Linux操作經驗的使用者對於<strong>套件管理工具</strong>必定不陌生，此工具除了自動下載、編譯之外，最方便的就是用套件管理工具來處理安裝、升級跟移除。</p>
+<p>對於想用較容易且方便的方法安裝 Unix tools 和開源軟體的 MAC 使用者，卻找不到類似 <strong>apt</strong> 或 <strong>yum</strong> 等好用的套件管理工具?</p>
+<p><strong>Homebrew</strong> 基於 Ruby 語言開發的 MAC 套件管理工具，也是本篇的主角。當然 Homebrew 不是唯一的選項，還有 <a href="http://www.macports.org/" target="_blank" rel="external">MacPorts</a> 和 <a href="http://www.finkproject.org/" target="_blank" rel="external">fink</a> 可用，但 Homebrew 是三者中最新且較受喜愛的。</p>
+<p><strong>Homebrew</strong> 在安裝套件時會依賴系統內已安裝完整的套件，不會再重複安裝已有的，<strong>Homebrew</strong> 的 formula 都是簡單的Ruby腳本，基於開源你可以 fork <a href="https://github.com/Homebrew/homebrew" target="_blank" rel="external">Homebrew github</a> 自行修改維護。</p>
+<h3 id="安裝與使用">安裝與使用</h3><h4 id="Step_One_(必要條件)">Step One (必要條件)</h4><ol>
+<li>MAC OS X 內必須已經安裝 <a href="https://itunes.apple.com/au/app/xcode/id497799835?mt=12" target="_blank" rel="external">Xcode</a>，並且已經執行 Xcode ，同意它的 license 安裝 Xocde 組件。</li>
+<li><p>ctrl + space 打開 Soptlight ，打上 <code>terminal</code> 打開終端機，當然你也可以使用其他的 terminal 軟體，安裝 <code>Command Line Tool</code>。</p>
+ <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xcode-<span class="built_in">select</span> <span class="comment">--install</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>系統必須裝有 ruby 開發工具，一般 Mac OS X 系統已內建 ruby ,可以直接使用 ruby 。 </li>
+</ol>
+<h4 id="Step_Two_安裝與執行_Homebrew">Step Two 安裝與執行 Homebrew</h4><p>使用以下的指令即可安裝 Homebrew，ruby會解釋腳本的作用，然後在你的確定下執行安裝，高級安裝選項請參照<a href="https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/Installation.md#installation" target="_blank" rel="external">這裏</a>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ruby <span class="operator">-e</span> <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>"</span></span><br></pre></td></tr></table></figure>
+<p>安裝好 Homebrew 之後，可以用 brew 指令進行操作。</p>
+<ol>
+<li><p><strong>Homebrew 環境檢測</strong></p>
+ <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span>doctor</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>環境檢測實例：<span class="keyword">*</span><span class="keyword">*</span>    
+</code></pre><p><img src="http://twinlin.com/wp-content/uploads/2014/11/doctor.png" alt="doctor"><br><br>顯示 <code>Your system is ready to brew.</code> 表示 MAC OS 的 Hmoebrew 的環境已經準備好了。</p>
+<ol>
+<li><p><strong>更新 formulae 列表 和 Homebrew 本身</strong></p>
+ <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span>update</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>更新 formulae 列表實例：<span class="keyword">*</span><span class="keyword">*</span>
+</code></pre><p><img src="http://twinlin.com/wp-content/uploads/2014/11/update.png" alt="update"><br><br>顯示 <code>Already up-to-date</code> 表示formulae 列表和 Homebrew 皆為最新。</p>
+<ol>
+<li><p><strong>搜尋軟體</strong></p>
+ <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span>search [軟體名稱]</span><br></pre></td></tr></table></figure>
+<p> <strong>搜尋軟體實例：</strong><br><img src="http://twinlin.com/wp-content/uploads/2014/11/search.png" alt="search"><br><br>會顯示所有包含搜尋名稱的軟體。</p>
+</li>
+<li><p><strong>安裝軟體</strong></p>
+ <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span>install [軟體名稱]</span><br></pre></td></tr></table></figure>
+<p> <strong>安裝軟體實例：</strong><br><img src="http://twinlin.com/wp-content/uploads/2014/11/install1.png" alt="install"><br><br>自動下載原始碼壓縮檔或軟件壓縮檔，解壓縮，必要時執行 ./configure 設定，編譯(make)及安裝(make install)。</p>
+</li>
+<li><p><strong>移除軟體</strong></p>
+ <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span>uninstall [軟體名稱] 或 <span class="keyword">brew </span>remove [軟體名稱]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>移除軟體實例：<span class="keyword">*</span><span class="keyword">*</span>
+</code></pre><p><img src="http://twinlin.com/wp-content/uploads/2014/11/remove.png" alt="uninstall"><br></p>
+<ol>
+<li><p><strong>顯示全部軟體列表 或 顯示指定軟體列表</strong></p>
+ <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew <span class="type">list</span> 或 brew <span class="type">list</span> [軟體名稱]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>顯示軟體列表實例：<span class="keyword">*</span><span class="keyword">*</span>
+</code></pre><p><img src="http://twinlin.com/wp-content/uploads/2014/11/list.png" alt="list"><br><br>因wget軟體已移除，所以找不到套件</p>
+<ol>
+<li><p><strong>檢查過期版本軟體</strong></p>
+ <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span>outdated</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>檢查過期版本軟體實例:<span class="keyword">*</span><span class="keyword">*</span>
+</code></pre><p><img src="http://twinlin.com/wp-content/uploads/2014/11/outdated.png" alt="outdated"><br><br>如果 MAC 內已安裝軟體版本不是最新，將會顯示其版本號和最新的版本號。</p>
+<ol>
+<li><p><strong>更新全部軟體 或 更新指定軟體</strong></p>
+ <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span>upgrade 或 <span class="keyword">brew </span>upgrade [軟體名稱]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>更新軟體實例：<span class="keyword">*</span><span class="keyword">*</span>
+</code></pre><p><img src="http://twinlin.com/wp-content/uploads/2014/11/upgrade.png" alt="upgrade"><br><br>套件更新一樣會自動下載原始碼壓縮檔，解壓縮，執行 ./configure 設定，編譯(make)及安裝(make install)</p>
+<ol>
+<li><p><strong>顯示套件更新後可清除的舊版本軟體套件</strong>    </p>
+ <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span>cleanup -n</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>顯示可清除的舊版本軟體實例：<span class="keyword">*</span><span class="keyword">*</span>
+</code></pre><p><img src="http://twinlin.com/wp-content/uploads/2014/11/cleanup-n.png" alt="cleanup-n"><br></p>
+<ol>
+<li><p><strong>清除更新後全部舊版本軟體套件 或 清除指定舊版本軟體套件</strong></p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ 	<span class="keyword">brew </span>cleanup 或 <span class="keyword">brew </span>cleanup [軟體名稱]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>清除舊版本軟體套件實例：<span class="keyword">*</span><span class="keyword">*</span>
+</code></pre><p><img src="http://twinlin.com/wp-content/uploads/2014/11/cleanup.png" alt="cleanup"><br></p>
+<p>未完待續……</p>
+<h4 id="參考">參考</h4><ol>
+<li><a href="http://brew.sh/" target="_blank" rel="external">Homebrew</a></li>
+<li><a href="http://coolestguidesontheplanet.com/installing-homebrew-os-x-yosemite-10-10-package-manager-unix-apps/" target="_blank" rel="external">COOLEST GUIDES ON THE PLANET</a></li>
+<li><a href="http://ihower.tw/blog/archives/4308" target="_blank" rel="external">ihower</a></li>
+<li><a href="http://blog.lyhdev.com/2011/06/homebrew-mac-os-x.html" target="_blank" rel="external">玩物尚誌</a></li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="前言">前言</h3><p>有Linux操作經驗的使用者對於<strong>套件管理工具</strong>必定不陌生，此工具除了自動下載、編譯之外，最方便的就是用套件管理工具來處理安裝、升級跟移除。</p>
+<p>對於想用較容易且方便的方法安裝 Unix tool]]>
+    </summary>
+    
+      <category term="MAC" scheme="http://blog.zerohua.com/tags/MAC/"/>
+    
+      <category term="homebrew" scheme="http://blog.zerohua.com/tags/homebrew/"/>
+    
+      <category term="系統工具" scheme="http://blog.zerohua.com/categories/%E7%B3%BB%E7%B5%B1%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+</feed>
