@@ -5,7 +5,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.zerohua.com//"/>
-  <updated>2015-08-12T16:08:46.000Z</updated>
+  <updated>2015-08-13T15:41:29.000Z</updated>
   <id>http://blog.zerohua.com//</id>
   
   <author>
@@ -16,11 +16,80 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[Install Memcached with PHP on Ubuntu 15.04]]></title>
+    <link href="http://blog.zerohua.com/2015/08/13/memcached/"/>
+    <id>http://blog.zerohua.com/2015/08/13/memcached/</id>
+    <published>2015-08-13T12:56:39.000Z</published>
+    <updated>2015-08-13T15:41:29.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Memcached">Memcached</h2><p><strong>Memcached</strong> 是一套分布式的高速缓存系統，在內存上以 key-value 方式存儲數據，用於優化動態網站非常有用，它通過在內存中緩存數據和對象來減少讀取數據庫的次數，從而提高網站的速度。</p>
+<h3 id="Install_Memcached_Service">Install Memcached Service</h3><p>首先，建議更新系統與最新的軟件包</p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-<span class="built_in">get</span> <span class="keyword">update</span></span><br></pre></td></tr></table></figure>
+<p>現在使用下面的命令在系統上安裝的memcached服務</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-<span class="keyword">get</span> install memcached</span><br></pre></td></tr></table></figure>
+<h3 id="Install_PHP_with_Memcached_Support">Install PHP with Memcached Support</h3><p>現在要安裝php的幾個必要的軟件包,還需要安裝php內存緩存模塊</p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-<span class="built_in">get</span> install php5 php5-<span class="built_in">dev</span> php-pear php5-memcached</span><br><span class="line">$ sudo  apt-<span class="built_in">get</span> install libmemcached-<span class="built_in">dev</span> build-essential</span><br></pre></td></tr></table></figure>
+<h3 id="Install_Memcache_PHP_Extension">Install Memcache PHP Extension</h3><p>最後用pecl安裝memcache的php擴展</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pecl <span class="keyword">install</span> memcache</span><br></pre></td></tr></table></figure>
+<p>現在能在php上啟用支援memcache，創建新的文件之前，要確保沒有可用的memcache配置文件，如果文件已經存在，跳過下面的命令 </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>echo <span class="string">"extension=memcache.so"</span> &gt; <span class="regexp">/etc/php</span>5/apache2/conf.d/<span class="number">20</span>-memcache.ini</span><br></pre></td></tr></table></figure>
+<p>修改Memcache可以使用的最大內存</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>nano /etc/memcached.conf</span><br></pre></td></tr></table></figure>
+<p>找到 -m 64 &lt;—default 修改為你要的值 例：-m 1024<br><br>重新啟動Apache<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sudo service apache2 restart</span><br></pre></td></tr></table></figure></p>
+<h3 id="Verify_Memcache_Setup">Verify Memcache Setup</h3><p>檢查Memcached服務是否啟用，default port 為 11211 在memcached.conf 可以查找到</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ echo <span class="string">"stats settings"</span> <span class="string">| nc localhost 11211</span></span><br></pre></td></tr></table></figure>
+<pre><code>STAT maxbytes <span class="number">67108864</span>
+STAT maxconns <span class="number">1024</span>
+STAT tcpport <span class="number">11211</span> 
+STAT udpport <span class="number">11211</span> 
+STAT inter <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>
+STAT verbosity <span class="number">0</span>
+STAT oldest <span class="number">0</span>
+STAT evictions on
+STAT domain_socket <span class="literal">NULL</span>
+STAT umask <span class="number">700</span>
+STAT growth_factor <span class="number">1.25</span>
+STAT chunk_size <span class="number">48</span>
+STAT num_threads <span class="number">4</span>
+STAT num_threads_per_udp <span class="number">4</span>
+STAT stat_key_prefix :
+STAT detail_enabled no
+STAT reqs_per_event <span class="number">20</span>
+STAT cas_enabled yes
+STAT tcp_backlog <span class="number">1024</span>
+STAT binding_protocol <span class="keyword">auto</span>-negotiate
+STAT auth_enabled_sasl no
+STAT item_size_max <span class="number">1048576</span>
+STAT maxconns_fast no
+STAT hashpower_init <span class="number">0</span>
+STAT slab_reassign no
+STAT slab_automove <span class="number">0</span>
+END
+</code></pre><p>現在檢查memcache的php擴展是否已啟用並正常工作<br><br>在web根目錄下建立 info.php 檔案</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?php</span></span><br><span class="line"> phpinfo();</span><br><span class="line"><span class="preprocessor">?&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>訪問 web下info.php</p>
+<pre><code><span class="string">http:</span><span class="comment">//server_ip_or_domain_anme/info.php</span>
+</code></pre><p>可以找到 memcached 如下圖：<br><img src="memcached/php_info.png" alt="info icon"></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Memcached">Memcached</h2><p><strong>Memcached</strong> 是一套分布式的高速缓存系統，在內存上以 key-value 方式存儲數據，用於優化動態網站非常有用，它通過在內存中緩存數據和對象來減少讀取數據庫的次數，從]]>
+    </summary>
+    
+      <category term="Memcached" scheme="http://blog.zerohua.com/tags/Memcached/"/>
+    
+      <category term="PHP" scheme="http://blog.zerohua.com/tags/PHP/"/>
+    
+      <category term="ubuntu" scheme="http://blog.zerohua.com/tags/ubuntu/"/>
+    
+      <category term="雲端網站" scheme="http://blog.zerohua.com/categories/%E9%9B%B2%E7%AB%AF%E7%B6%B2%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Install LAMP + WordPress]]></title>
     <link href="http://blog.zerohua.com/2015/08/12/install_lamp_wordpress/"/>
     <id>http://blog.zerohua.com/2015/08/12/install_lamp_wordpress/</id>
     <published>2015-08-12T15:25:02.000Z</published>
-    <updated>2015-08-12T16:08:46.000Z</updated>
+    <updated>2015-08-13T13:52:08.000Z</updated>
     <content type="html"><![CDATA[<h1 id="Install_LAMP">Install LAMP</h1><h3 id="Step_One_-_Install_Apache">Step One - Install Apache</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get <span class="operator"><span class="keyword">update</span>  (<span class="keyword">update</span> ubuntu <span class="keyword">package</span> <span class="keyword">list</span>)</span><br><span class="line">$ sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> apache2</span></span><br></pre></td></tr></table></figure>
 <h3 id="Step_Two_-_Install_Mysql">Step Two - Install Mysql</h3><p><code># 不是必要的指令</code> </p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-<span class="keyword">get</span> install mysql-server php5-mysql</span><br><span class="line">$ sudo mysql_install_db ( create <span class="keyword">it</span>'s database directory structure) <span class="comment">#</span></span><br><span class="line">$ sudo mysql_secure_installation (<span class="command">run</span> a simple security <span class="keyword">script</span>) <span class="comment">#</span></span><br></pre></td></tr></table></figure>
@@ -47,11 +116,11 @@
     
       <category term="LAMP" scheme="http://blog.zerohua.com/tags/LAMP/"/>
     
-      <category term="Linux" scheme="http://blog.zerohua.com/tags/Linux/"/>
-    
       <category term="WordPress" scheme="http://blog.zerohua.com/tags/WordPress/"/>
     
-      <category term="網絡服務" scheme="http://blog.zerohua.com/categories/%E7%B6%B2%E7%B5%A1%E6%9C%8D%E5%8B%99/"/>
+      <category term="ubuntu" scheme="http://blog.zerohua.com/tags/ubuntu/"/>
+    
+      <category term="雲端網站" scheme="http://blog.zerohua.com/categories/%E9%9B%B2%E7%AB%AF%E7%B6%B2%E7%AB%99/"/>
     
   </entry>
   
@@ -60,7 +129,7 @@
     <link href="http://blog.zerohua.com/2015/08/11/homebrew/"/>
     <id>http://blog.zerohua.com/2015/08/11/homebrew/</id>
     <published>2015-08-11T15:38:02.000Z</published>
-    <updated>2015-08-12T12:56:51.000Z</updated>
+    <updated>2015-08-13T13:25:08.000Z</updated>
     <content type="html"><![CDATA[<h3 id="前言">前言</h3><p>有Linux操作經驗的使用者對於<strong>套件管理工具</strong>必定不陌生，此工具除了自動下載、編譯之外，最方便的就是用套件管理工具來處理安裝、升級跟移除。</p>
 <p>對於想用較容易且方便的方法安裝 Unix tools 和開源軟體的 MAC 使用者，卻找不到類似 <strong>apt</strong> 或 <strong>yum</strong> 等好用的套件管理工具?</p>
 <p><strong>Homebrew</strong> 基於 Ruby 語言開發的 MAC 套件管理工具，也是本篇的主角。當然 Homebrew 不是唯一的選項，還有 <a href="http://www.macports.org/" target="_blank" rel="external">MacPorts</a> 和 <a href="http://www.finkproject.org/" target="_blank" rel="external">fink</a> 可用，但 Homebrew 是三者中最新且較受喜愛的。</p>
