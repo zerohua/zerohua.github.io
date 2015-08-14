@@ -5,7 +5,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.zerohua.com//"/>
-  <updated>2015-08-13T16:33:27.000Z</updated>
+  <updated>2015-08-14T09:44:04.000Z</updated>
   <id>http://blog.zerohua.com//</id>
   
   <author>
@@ -16,11 +16,108 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[Linux Apache 日誌切割使用 cronolog]]></title>
+    <link href="http://blog.zerohua.com/2015/08/14/apache-cronlog/"/>
+    <id>http://blog.zerohua.com/2015/08/14/apache-cronlog/</id>
+    <published>2015-08-14T07:19:15.000Z</published>
+    <updated>2015-08-14T09:44:04.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="cronolog_介紹">cronolog 介紹</h3><p>cronolog 是一個簡單的過濾程序，讀取日誌文件條目從標準輸入和輸出的每個條目並寫入指定的日誌文件的文件名模板和當前的日期和時間。當擴展文件名的變化，目前的文件是關閉，新開闢的。 cronolog 旨在和一個Web服務器一起使用，如Apache，分割訪問日誌為每天或每月的日誌。</p>
+<h3 id="為何要分割日誌">為何要分割日誌</h3><p>apache服務器，默認日誌文件是不分割的，一個整文件既不易於管理，也不易於分析統計。</p>
+<h3 id="為何使用cronolog">為何使用cronolog</h3><p>apache的FAQ中推薦發展已經比較成熟的一個日誌輪循工具cronolog，我google的，你懂的。</p>
+<h3 id="在ubuntu按裝cronolog">在ubuntu按裝cronolog</h3><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-<span class="built_in">get</span> <span class="keyword">update</span></span><br><span class="line">$ sudo apt-<span class="built_in">get</span> install cronolog</span><br></pre></td></tr></table></figure>
+<h3 id="使用_cronolog">使用 cronolog</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>cronolog -h</span><br></pre></td></tr></table></figure>
+<pre><code>usage: cronolog [OPTIONS] logfile-spec
+-H <span class="keyword">NAME</span>,   --hardlink=<span class="keyword">NAME</span> maintain a hard link from <span class="keyword">NAME</span> to current <span class="built_in">log</span>
+-S <span class="keyword">NAME</span>,   --symlink=<span class="keyword">NAME</span>  maintain a symbolic link from <span class="keyword">NAME</span> to current <span class="built_in">log</span>
+-P <span class="keyword">NAME</span>,   --prev-symlink=<span class="keyword">NAME</span>  maintain a symbolic link from <span class="keyword">NAME</span> to previous <span class="built_in">log</span>
+-l <span class="keyword">NAME</span>,   --link=<span class="keyword">NAME</span>     same as -S/--symlink
+-h,        --help          <span class="built_in">print</span> this help, <span class="keyword">then</span> <span class="keyword">exit</span>
+-p PERIOD, --period=PERIOD set the rotation period explicitly
+-d DELAY,  --delay=DELAY   set the rotation period delay
+-o,        --once-<span class="keyword">only</span>     create single output <span class="built_in">log</span> from template (not rotated)
+-x <span class="keyword">FILE</span>,   --debug=<span class="keyword">FILE</span>    <span class="built_in">write</span> debug messages to <span class="keyword">FILE</span>
+                          ( or to standard error <span class="keyword">if</span> <span class="keyword">FILE</span> is <span class="string">"-"</span>)
+-a,        --american         American date formats
+-e,        --european         European date formats (<span class="keyword">default</span>)
+-s,    --start-time=TIME   starting time
+-z TZ, --time-zone=TZ      <span class="keyword">use</span> TZ for timezone
+-V,      --version         <span class="built_in">print</span> version <span class="keyword">number</span>, <span class="keyword">then</span> <span class="keyword">exit</span>
+</code></pre><p>cronolog 一般是採取管道的方式來工作的，採用如下的形式：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ loggenerator <span class="string">| cronolog log_file_pattern</span></span><br></pre></td></tr></table></figure></p>
+<p>其中，loggenerator為產生log的程序，而log_file_pattern是日誌文件的路徑，可以在其中加入cronolog所支持的時間相關的pattern字符，如/www/log/%y/%m/%d/access.log。其pattern為％字符後跟一特殊字符，簡述如下：</p>
+<p>轉譯符：</p>
+<pre><code><span class="var_expand">%    %</span>字符
+n    換行
+t    制表符
+</code></pre><p>時間域：</p>
+<pre><code>H    小時(<span class="number">00.</span><span class="number">.23</span>)
+I    小時(<span class="number">01.</span><span class="number">.12</span>)
+p    該locale下的AM或PM標識
+M    分鐘(<span class="number">00.</span><span class="number">.59</span>)
+S    秒 (<span class="number">00.</span><span class="number">.61</span>, which allows <span class="keyword">for</span> leap seconds)
+X    該locale下時間表示符(eg: <span class="string">"15:12:47"</span>)
+Z    時區。若時區不能確定，則無意義    
+</code></pre><p>日期域: </p>
+<pre><code>a    該locale下的工作日簡名(eg: Sun..Sat)
+A    該locale下的工作日全名(eg: Sunday .. Satur-ay)
+b     該locale下的月份簡稱(eg: Jan .. Dec)
+B     該locale下的月份全稱(eg: January .. December)
+c     該locale下的日期和時間(eg: <span class="string">"Sun Dec 15 14:12:47 GMT 1996"</span>)
+d     當月中的天數 (<span class="number">01</span> .. <span class="number">31</span>)
+j     當年中的天數 (<span class="number">001</span> .. <span class="number">366</span>)
+m     月數 (<span class="number">01</span> .. <span class="number">12</span>)
+U     當年中的星期數，以周日作為一周開始,其中第一周為首個含星期天的星期(<span class="number">00.</span><span class="number">.53</span>)
+W     當年中的星期數，以星期一作為一周的開始,其中第一周為首個含星期天的星期(<span class="number">00.</span><span class="number">.53</span>)
+w     工作日數(<span class="number">0</span> .. <span class="number">6</span>, <span class="number">0</span>表示星期天)
+x     該locale下的日期表示(e.g. <span class="string">"13/04/97"</span>)
+y     兩位數的年份(<span class="number">00</span> .. <span class="number">99</span>)
+Y     四位數的年份(<span class="number">1970</span> .. <span class="number">2038</span>)
+</code></pre><h3 id="配置Apache">配置Apache</h3><p>apache 虛擬主機日誌配置<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nano /etc/apache2/sites-available/<span class="keyword">test</span>.<span class="keyword">tw</span>.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure></p>
+<p>只需關心配置1和配置2</p>
+<pre><code>&lt;VirtualHost *:80&gt;
+  ServerAdmin xxx@gmail.com
+  DocumentRoot /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/
+  ServerName <span class="keyword">test</span>.<span class="keyword">tw</span>
+  ServerAlias www.<span class="keyword">test</span>.<span class="keyword">tw</span>
+  配置1==&gt; ErrorLog <span class="string">"|/usr/bin/cronolog /var/www/test.tw/logs/error_%Y%m%d.log"</span>
+  配置1==&gt; CustomLog <span class="string">"|/usr/bin/cronolog /var/www/test.tw/logs/access_%Y%m%d.log combined"</span>
+  &lt;Directory /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/&gt;
+          Options Indexes FollowSymLinks MultiViews
+          AllowOverride All
+          <span class="keyword">Order</span> allow,deny
+          allow from all
+  &lt;/Directory&gt;
+</code></pre><p></p>
+<p>重啟apache使配置生效</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sudo service apache2 restart</span><br></pre></td></tr></table></figure>
+<h3 id="查看結果">查看結果</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">cd</span> /<span class="keyword">var</span>/www/<span class="keyword">test</span>.<span class="keyword">tw</span>/logs</span><br><span class="line">$ ll</span><br></pre></td></tr></table></figure>
+<pre><code>total <span class="number">15072</span>
+drwxr-xr-x <span class="number">2</span> www-data www-data     <span class="number">4096</span> Aug <span class="number">12</span> <span class="number">05</span>:<span class="number">31</span> ./
+drwxr-xr-x <span class="number">6</span> www-data www-data     <span class="number">4096</span> Aug <span class="number">14</span> <span class="number">04</span>:<span class="number">59</span> ../
+-rw-r--r-- <span class="number">1</span> root root   <span class="number">16028</span> Dec <span class="number">26</span> <span class="number">15</span>:<span class="number">16</span> access_201510810.<span class="built_in">log</span>
+-rw-r--r-- <span class="number">1</span> root root <span class="number">2406307</span> Dec <span class="number">26</span> <span class="number">23</span>:<span class="number">59</span> access_20150811.<span class="built_in">log</span>
+-rw-r--r-- <span class="number">1</span> root root <span class="number">8292792</span> Dec <span class="number">27</span> <span class="number">23</span>:<span class="number">59</span> access_20150812.<span class="built_in">log</span>
+-rw-r--r-- <span class="number">1</span> root root <span class="number">4682211</span> Dec <span class="number">28</span> <span class="number">18</span>:<span class="number">56</span> access_20150813.<span class="built_in">log</span>
+</code></pre><h3 id="完了…">完了…</h3>]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="cronolog_介紹">cronolog 介紹</h3><p>cronolog 是一個簡單的過濾程序，讀取日誌文件條目從標準輸入和輸出的每個條目並寫入指定的日誌文件的文件名模板和當前的日期和時間。當擴展文件名的變化，目前的文件是關閉，新開闢的。 cronolog]]>
+    </summary>
+    
+      <category term="Apache" scheme="http://blog.zerohua.com/tags/Apache/"/>
+    
+      <category term="log" scheme="http://blog.zerohua.com/tags/log/"/>
+    
+      <category term="ubuntu" scheme="http://blog.zerohua.com/tags/ubuntu/"/>
+    
+      <category term="系統工具" scheme="http://blog.zerohua.com/categories/%E7%B3%BB%E7%B5%B1%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Install Memcached with PHP on Ubuntu 15.04]]></title>
     <link href="http://blog.zerohua.com/2015/08/13/memcached/"/>
     <id>http://blog.zerohua.com/2015/08/13/memcached/</id>
     <published>2015-08-13T12:56:39.000Z</published>
-    <updated>2015-08-13T16:33:27.000Z</updated>
+    <updated>2015-08-14T07:50:58.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Memcached">Memcached</h2><p><strong>Memcached</strong> 是一套分布式的高速缓存系統，在內存上以 key-value 方式存儲數據，用於優化動態網站非常有用，它通過在內存中緩存數據和對象來減少讀取數據庫的次數，從而提高網站的速度。</p>
 <h3 id="Install_Memcached_Service">Install Memcached Service</h3><p>首先，建議更新系統與最新的軟件包</p>
 <figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-<span class="built_in">get</span> <span class="keyword">update</span></span><br></pre></td></tr></table></figure>
